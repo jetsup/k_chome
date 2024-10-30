@@ -1,3 +1,4 @@
 __pycache__
-*/migrations/[0-9]*_*.py
+node_modules
 credentials.py
+*/migrations/[0-9]*_*.py

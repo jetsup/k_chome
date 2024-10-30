@@ -1,17 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
-from communication.models import EmailMessage, EmailAddress
-from communication.controller import send_email
+from datetime import datetime
 
 def home(request: HttpRequest) -> HttpResponse:
+    # redirect user if not logged in
+    if not request.user.is_authenticated:
+        return redirect("authenticate")
     
-    # Test Email send functionality
-    recipient1 = "email1@gmail.com"
-    recipient2 = "email2@gmail.com"
-
-    subject = "Welcome to K Home System"
-    message = "Hello, welcome to K Home System. We are glad to have you here."
-    
-    response = send_email([recipient1, recipient2], subject, message)
-    
-    return render(request, 'index.html')
+    return render(
+        request,
+        'index.html', 
+        {"year": datetime.now().year}
+    )
