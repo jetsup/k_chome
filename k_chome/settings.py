@@ -15,7 +15,7 @@ import os
 from .credentials import (CHOME_DB_NAME, CHOME_DB_USER, CHOME_DB_PASSWORD,
                            CHOME_DB_HOST, CHOME_DB_PORT, CHOME_EMAIL_HOST,
                              CHOME_EMAIL_PORT, CHOME_USE_TLS, CHOME_USE_SSL,
-                               CHOME_EMAIL_USER, CHOME_APP_PASSWORD)
+                               CHOME_EMAIL_USER, CHOME_APP_PASSWORD, CHOME_SITE_NAME)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -147,6 +147,9 @@ MEDIA_URL = "/media/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Customization Fields
+PROJECT_SITE_NAME = CHOME_SITE_NAME
 
 # SMTP Configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

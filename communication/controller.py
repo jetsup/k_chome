@@ -14,4 +14,3 @@ def send_email(recipients: list, subject: str, message: str) -> int:
     response = email_message.send()
 
     return response.status_code
-
