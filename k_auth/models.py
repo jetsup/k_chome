@@ -4,14 +4,13 @@ from django.http import HttpRequest
 import uuid
 import pyotp
 from django.conf import settings
-from k_chome.utils import get_site_url, generate_short_uuid
-import os
+from k_chome.utils import get_site_url
 from communication.controller import send_email
 from datetime import datetime, timedelta
 from django.contrib import messages
 
 OTP_TIMEOUT = 300  # 5 minutes
-TOKEN_EXPIRATION = 86400  # 24 hours
+TOKEN_EXPIRATION = 1800  # 30 minutes
 
 class UserManager(BaseUserManager):
     def create_user(
@@ -145,6 +144,7 @@ class HomeUsers(AbstractUser):
             self.save()
         else:
             messages.error(request, f"Failed to send verification email to {self.email}. Error code: {response_code}")
+
         return response_code
 
     class Meta:

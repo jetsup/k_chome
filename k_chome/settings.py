@@ -75,6 +75,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'home.context_processors.settings_context', # to access settings in templates
             ],
         },
     },
@@ -138,6 +139,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "node_modules/bootstrap/dist"),
     os.path.join(BASE_DIR, "node_modules/jquery/dist"),
     os.path.join(BASE_DIR, "node_modules/font-awesome"),
+    os.path.join(BASE_DIR, "node_modules/alpinejs/dist"),
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
