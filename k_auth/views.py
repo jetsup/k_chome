@@ -6,6 +6,8 @@ from datetime import datetime
 from .models import HomeUsers, UserTypes, VerificationTokens
 import uuid
 
+SESSION_EXPIRY = 1209600 # 2 weeks
+
 def auth(request: HttpRequest) -> HttpResponse:
     return render(
         request,
@@ -16,6 +18,7 @@ def auth(request: HttpRequest) -> HttpResponse:
 def signin(request: HttpRequest) -> HttpResponse:
     username = request.POST.get('username')
     password = request.POST.get('password')
+    remember_me = request.POST.get('remember_me') == 'on'
 
     if not username:
         messages.error(request, 'Username is required')
@@ -42,6 +45,11 @@ def signin(request: HttpRequest) -> HttpResponse:
         )
     
     if user is not None:
+        if remember_me:
+            request.session.set_expiry(SESSION_EXPIRY)
+        else:
+            request.session.set_expiry(0) # after browser close
+
         login(request, user)
         return redirect('home')
     else:
