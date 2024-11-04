@@ -1,4 +1,6 @@
 {% load static %}
+{% load custom_tags %}
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="{%url 'home'%}">{{settings.PROJECT_SITE_NAME}}</a>
@@ -24,7 +26,7 @@
                 <div class="d-flex ms-auto">
                         <div class="dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="{% static 'images/profile.png' %}" alt="profile" width="30" height="30" class="d-inline-block align-text-top rounded-circle">
+                                <img src="{{user|get_profile_image}}" alt="profile" width="30" height="30" class="d-inline-block align-text-top rounded-circle">
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
                                 <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>

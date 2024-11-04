@@ -5,6 +5,7 @@ from django.http import HttpRequest, HttpResponse
 from datetime import datetime
 from .models import HomeUsers, UserTypes, VerificationTokens
 import uuid
+from .constants import USER_TYPES
 
 SESSION_EXPIRY = 1209600 # 2 weeks
 
@@ -129,7 +130,7 @@ def signup(request: HttpRequest) -> HttpResponse:
             {"year": datetime.now().year}
         )
     
-    user_type = UserTypes.objects.get_or_create(user_type='Guest')[0]
+    user_type = UserTypes.objects.get_or_create(user_type=USER_TYPES[0])[0]
     
     # create user
     if not messages.get_messages(request):

@@ -15,7 +15,8 @@ import os
 from .credentials import (CHOME_DB_NAME, CHOME_DB_USER, CHOME_DB_PASSWORD,
                            CHOME_DB_HOST, CHOME_DB_PORT, CHOME_EMAIL_HOST,
                              CHOME_EMAIL_PORT, CHOME_USE_TLS, CHOME_USE_SSL,
-                               CHOME_EMAIL_USER, CHOME_APP_PASSWORD, CHOME_SITE_NAME)
+                               CHOME_EMAIL_USER, CHOME_APP_PASSWORD, CHOME_SITE_NAME,
+                               JWT_AUTH_COOKIE, JWT_AUTH_REFRESH_COOKIE)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,7 +31,7 @@ SECRET_KEY = 'django-insecure-v7^n-#zkqlzp%041l#$#adem78@^_ihgv))eryul+26kt@5z$0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 # NECESSARY SO THAT IT CAN USE MY CUSTOM USER MODEL
 AUTH_USER_MODEL = "k_auth.HomeUsers"
@@ -47,6 +48,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # JWT
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
+    'dj_rest_auth',
+    # Custom Apps
     'communication',
     'home',
     'k_auth',
@@ -161,3 +168,18 @@ EMAIL_USE_TLS = CHOME_USE_TLS
 EMAIL_USE_SSL = CHOME_USE_SSL
 EMAIL_HOST_USER = CHOME_EMAIL_USER
 EMAIL_HOST_PASSWORD = CHOME_APP_PASSWORD # password from the Google unsecure app
+
+
+# JWT Configuration
+REST_AUTH = {
+    'USE_JWT': True,
+    'JWT_AUTH_COOKIE': JWT_AUTH_COOKIE,
+    'JWT_AUTH_REFRESH_COOKIE': JWT_AUTH_REFRESH_COOKIE,
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}

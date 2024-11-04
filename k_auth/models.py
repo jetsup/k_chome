@@ -101,6 +101,7 @@ class HomeUsers(AbstractUser):
     verified_at = models.DateTimeField(null=True, blank=True, default=None)
     # verification code will be nullified after verification or after 24 hours
     verification_token = models.OneToOneField(VerificationTokens, on_delete=models.SET_NULL, null=True, default=None)
+    last_login = models.DateTimeField(null=True, blank=True, default=None)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -125,8 +126,8 @@ class HomeUsers(AbstractUser):
         self.verification_token = VerificationTokens.objects.create()
         
         site_url = get_site_url(request)
-        verification_link = f"{site_url}/verify/{str(self.verification_token.token)}"
-        email_subject = "Email Verification"
+        verification_link = f"{site_url}/auth/verify/{str(self.verification_token.token)}"
+        email_subject = "Account Activation"
         email_message = f"""
         You have created an account on {settings.PROJECT_SITE_NAME}. Please verify your email by clicking the link below to complete your registration.
 
