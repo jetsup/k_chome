@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class KAuthApiConfig(AppConfig):
+class ThingConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'k_auth_api'
+    name = 'thing'

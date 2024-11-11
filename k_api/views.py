@@ -2,8 +2,16 @@ from django.shortcuts import render
 from django.http import HttpRequest, JsonResponse
 from k_auth.models import HomeUsers, UserTypes
 from k_auth.constants import USER_TYPES
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from .serializers import HomeUserSerializer
 
-# Create your views here.
+# Create API Create User view
+class CreateUserView(generics.CreateAPIView):
+    queryset = HomeUsers.objects.all()
+    serializer_class = HomeUserSerializer
+    permission_classes = [AllowAny]
+
 def register(request: HttpRequest): # register function called through API
     if request.method == 'POST':
         data = request.POST

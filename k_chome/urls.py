@@ -21,5 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('home.urls')),
     path('auth/', include('k_auth.urls')),
-    path('api/auth/', include('k_auth_api.urls')),
+    path('api/auth/', include('k_api.urls')),
+    path('api/iot/', include('thing.urls')),
 ]

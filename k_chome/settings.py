@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'communication',
     'home',
     'k_auth',
+    'thing',
 ]
 
 MIDDLEWARE = [
