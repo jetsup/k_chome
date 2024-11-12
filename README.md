@@ -37,3 +37,5 @@ or
 ```bash
 python3 manage.py runserver 9090 # to run the server on port 9090, change 9090 to any port you want
 ```
+
+When adding a board to the database, use the [read_pid_vid.py](read_pid_vid.py) script to read the `PID` and `VID` of the board. This will help in identifying the board when it is connected to the server.
