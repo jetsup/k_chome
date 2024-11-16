@@ -39,3 +39,9 @@ python3 manage.py runserver 9090 # to run the server on port 9090, change 9090 t
 ```
 
 When adding a board to the database, use the [read_pid_vid.py](read_pid_vid.py) script to read the `PID` and `VID` of the board. This will help in identifying the board when it is connected to the server.
+
+The server need to listen to the serial port when a new device or a registered device is connected to the server. To do this, we use background tasks to listen to the serial port. The background task is implemented using [Celery](https://docs.celeryproject.org/en/stable/). To run the background task, run the following command:
+
+```bash
+celery multi start w1 -A k_chome -l info --pidfile=/var/run/celery/%n.pid --logfile=/var/log/celery/%n.log # might need to run as sudo
+```

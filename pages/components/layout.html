@@ -10,6 +10,8 @@
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
         <script src="{% static 'jquery.min.js' %}"></script>
         <script src="{% static 'cdn.js' %}"></script>
+        <link rel="stylesheet" href="{% static 'dataTables.dataTables.min.css' %}">
+        <script src="{% static 'dataTables.min.js' %}"></script>
     </head>
     <body>
         {% block navbar %}
@@ -37,6 +39,9 @@
         {% endblock %}
 
         {% block footer %}
+        {% endblock %}
+
+        {% block scripts %}
         {% endblock %}
 
         <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>

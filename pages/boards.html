@@ -1,0 +1,101 @@
+{% extends "components/layout.html" %}
+{% load custom_tags %} 
+
+{% block title %}Boards{% endblock %}
+
+{% block navbar %} 
+    {% include './components/navbar.html' %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-between mt-2">
+                <h3>Boards</h3>
+                <a href="{% url 'board-add' %}" class="text-white">
+                    <button class="btn btn-primary">
+                        <i class="fa fa-plus"></i> Add Board
+                    </button>
+                </a>
+            </div>
+            <table class="table table-striped" id="boards-table">
+                <thead>
+                    <tr>
+                        <th>Board Name</th>
+                        <th>Baudrate</th>
+                        <th>Port</th>
+                        <th>Board Description</th>
+                        <th>Board Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data will be populated here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    let data_url = '{% url "boards-online" %}';
+
+    $(document).ready(function () {
+        $.ajax({
+            url: data_url,
+            dataType: "json",
+            success: function (data) {
+                populateDataTable(data);
+            },
+            error: function (error) {
+                console.error("Error fetching data:", error);
+            },
+        });
+
+        function populateDataTable(tableData) {
+            $("#boards-table").DataTable({
+                paging: true,
+                ordering: true,
+                info: true,
+                searching: true,
+                lengthChange: true,
+                autoWidth: true,
+                responsive: true,
+                scrollX: true,
+                scrollY: true,
+                scrollCollapse: true,
+                pagingType: "full_numbers",
+                lengthMenu: [
+                    [10, 25, 50, 100, -1],
+                    [10, 25, 50, 100, "All"],
+                ],
+                order: [[0, "asc"]],
+                data: tableData,
+                columns: [
+                    { data: "name", orderable: true,
+                        render: function (data, type, row) {
+                            return `<a href="{% url 'board-update' 0 %}"> ${data} </a>`.replace("0", row.id);
+                        },
+                 },
+                    { data: "baudrate", orderable: true },
+                    { data: "port", orderable: true },
+                    { data: "description", orderable: false },
+                    {
+                        data: "online",
+                        orderable: true,
+                        render: function (data, type, row) {
+                            return data
+                                ? '<span class="badge badge-success text-success">Online</span>'
+                                : '<span class="badge badge-danger text-danger">Offline</span>';
+                        },
+                    },
+                ],
+            });
+        }
+    });
+</script>
+{% endblock %}

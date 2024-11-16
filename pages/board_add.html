@@ -1,0 +1,95 @@
+{% extends "./components/layout.html" %}
+
+{% load static %}
+{% load custom_tags %}
+
+{% block title %}Add Board{% endblock %}
+{% block navbar %}
+    {% include "./components/navbar.html" %}
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row mt-2">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <h3>Add Board</h3>
+                    <a href="{% url 'boards' %}" class="text-white">
+                        <Button class="btn btn-secondary">
+                            <i class="fa fa-chevron-left"></i> Back to Boards
+                        </Button>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{% url 'board-add' %}">
+                        {% csrf_token %}
+                        <div class="form-group mb-3">
+                            <label for="board-name">Board Name</label>
+                            <input type="text" name="board-name" id="board-name" class="form-control" required>
+
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {% if "board name" in message|to_lowercase %}
+                                        <div class="alert alert-danger mt-2">
+                                            {{ message }}
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="description">Board Description</label>
+                            <textarea name="description" id="description" class="form-control" required></textarea>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <div class="form-group mb-3 col-md-5">
+                                <label for="baudrate">Baudrate</label>
+                                <input type="text" name="baudrate" id="baudrate" class="form-control" required>
+
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        {% if "baudrate" in message|to_lowercase %}
+                                            <div class="alert alert-danger mt-2">
+                                                {{ message }}
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                            <div class="form-group mb-3 col-md-5">
+                                <label for="device">Board</label>
+                                <select name="device" id="device" class="form-control form-select" required>
+                                    {% for device_key, dev_port in devices.items %}
+                                        <option value="{{ device_key }}">{{ dev_port }}</option>
+                                        {{ device_key }}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="data-headers">Data Headers <i class="text-muted">(comma separated)</i></label>
+                            <a class="bg-blue" data-toggle="tooltip" title="Headers that will be displayed on the dashboard and guages.">
+                                <i class="fa fa-question-circle"></i>
+                            </a>
+                            <input type="text" name="data-headers" id="data-headers" class="form-control" required>
+                            <small class="text-muted">Example: Kitchen Temp, Kitchen Humidity, Living Room Temp, Living Room Humidity</small>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="data-format">Data Format</label>
+                            <a class="bg-blue" data-toggle="tooltip" title="If your data from the board has a specific format, you can specify it here.">
+                                <i class="fa fa-question-circle"></i>
+                            </a>
+                            <input type="text" name="data-format" id="data-format" class="form-control" required>
+                            <small class="text-muted">Example: ##d1,d2,d3,d4##</small>                            
+                        </div>
+                        <div class="form-group mb-3">
+                            <button type="submit" class="btn btn-primary">Add Board</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

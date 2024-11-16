@@ -12,11 +12,22 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
-from .credentials import (CHOME_DB_NAME, CHOME_DB_USER, CHOME_DB_PASSWORD,
-                           CHOME_DB_HOST, CHOME_DB_PORT, CHOME_EMAIL_HOST,
-                             CHOME_EMAIL_PORT, CHOME_USE_TLS, CHOME_USE_SSL,
-                               CHOME_EMAIL_USER, CHOME_APP_PASSWORD, CHOME_SITE_NAME,
-                               JWT_AUTH_COOKIE, JWT_AUTH_REFRESH_COOKIE)
+from .credentials import (
+    CHOME_DB_NAME,
+    CHOME_DB_USER,
+    CHOME_DB_PASSWORD,
+    CHOME_DB_HOST,
+    CHOME_DB_PORT,
+    CHOME_EMAIL_HOST,
+    CHOME_EMAIL_PORT,
+    CHOME_USE_TLS,
+    CHOME_USE_SSL,
+    CHOME_EMAIL_USER,
+    CHOME_APP_PASSWORD,
+    CHOME_SITE_NAME,
+    JWT_AUTH_COOKIE,
+    JWT_AUTH_REFRESH_COOKIE,
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +37,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-v7^n-#zkqlzp%041l#$#adem78@^_ihgv))eryul+26kt@5z$0'
+SECRET_KEY = "django-insecure-v7^n-#zkqlzp%041l#$#adem78@^_ihgv))eryul+26kt@5z$0"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -42,67 +53,71 @@ LOGIN_URL = "/auth"
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
     # JWT
-    'rest_framework',
-    'rest_framework.authtoken',
-    'rest_framework_simplejwt',
-    'dj_rest_auth',
+    "rest_framework",
+    "rest_framework.authtoken",
+    "rest_framework_simplejwt",
+    "dj_rest_auth",
     # Custom Apps
-    'communication',
-    'home',
-    'k_auth',
-    'thing',
+    "celery_background",
+    "communication",
+    "home",
+    "k_auth",
+    "thing",
+    # Celery
+    "django_celery_results",
+    "django_celery_beat",
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'k_chome.urls'
+ROOT_URLCONF = "k_chome.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['pages'],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-                'home.context_processors.settings_context', # to access settings in templates
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": ["pages"],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+                "home.context_processors.settings_context",  # to access settings in templates
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'k_chome.wsgi.application'
+WSGI_APPLICATION = "k_chome.wsgi.application"
 
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': CHOME_DB_NAME,
-        'USER': CHOME_DB_USER,
-        'PASSWORD': CHOME_DB_PASSWORD,
-        'HOST': CHOME_DB_HOST,
-        'PORT': CHOME_DB_PORT,
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": CHOME_DB_NAME,
+        "USER": CHOME_DB_USER,
+        "PASSWORD": CHOME_DB_PASSWORD,
+        "HOST": CHOME_DB_HOST,
+        "PORT": CHOME_DB_PORT,
     }
 }
 
@@ -112,16 +127,16 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -129,9 +144,10 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'Africa/Nairobi'
+# USE_TZ = True
+TIME_ZONE = "Africa/Nairobi"
 
 USE_I18N = True
 
@@ -141,13 +157,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
     os.path.join(BASE_DIR, "node_modules/bootstrap/dist"),
     os.path.join(BASE_DIR, "node_modules/jquery/dist"),
     os.path.join(BASE_DIR, "node_modules/font-awesome"),
     os.path.join(BASE_DIR, "node_modules/alpinejs/dist"),
+    os.path.join(BASE_DIR, "node_modules/datatables.net/js"),
+    os.path.join(BASE_DIR, "node_modules/datatables.net-dt/css"),
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
@@ -156,31 +174,41 @@ MEDIA_URL = "/media/"
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Customization Fields
 PROJECT_SITE_NAME = CHOME_SITE_NAME
 
 # SMTP Configuration
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = CHOME_EMAIL_HOST
 EMAIL_PORT = CHOME_EMAIL_PORT
 EMAIL_USE_TLS = CHOME_USE_TLS
 EMAIL_USE_SSL = CHOME_USE_SSL
 EMAIL_HOST_USER = CHOME_EMAIL_USER
-EMAIL_HOST_PASSWORD = CHOME_APP_PASSWORD # password from the Google unsecure app
+EMAIL_HOST_PASSWORD = CHOME_APP_PASSWORD  # password from the Google unsecure app
 
 
 # JWT Configuration
 REST_AUTH = {
-    'USE_JWT': True,
-    'JWT_AUTH_COOKIE': JWT_AUTH_COOKIE,
-    'JWT_AUTH_REFRESH_COOKIE': JWT_AUTH_REFRESH_COOKIE,
+    "USE_JWT": True,
+    "JWT_AUTH_COOKIE": JWT_AUTH_COOKIE,
+    "JWT_AUTH_REFRESH_COOKIE": JWT_AUTH_REFRESH_COOKIE,
 }
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
 }
+
+# Celery Configuration
+CELERY_BROKER_URL = "redis://localhost:6379/0"
+# CELERY_BROKER_URL = "pyamqp://guest@localhost//"
+CELERY_RESULT_BACKEND = "django-db"
+CELERY_CACHE_BACKEND = 'django-cache'
+CELERY_RESULT_EXTENDED = True
+# CELERY_RESULT_BACKEND = f"djcelery://{CHOME_DB_USER}:{CHOME_DB_PASSWORD}@{CHOME_DB_HOST}:{CHOME_DB_PORT}/{CHOME_DB_NAME}"
+CELERY_TIMEZONE = "Africa/Nairobi"
+boards_database = {}

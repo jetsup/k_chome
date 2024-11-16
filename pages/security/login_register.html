@@ -51,6 +51,16 @@
                     <img src="{% static 'images/web-assets/spy-eye.png' %}"
                       style="width: 185px;" alt="logo">
                     <h4 class="mt-1 mb-5 pb-1">Home Lab</h4>
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if "account" in message|to_lowercase %}
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
                   </div>
   
                   <form id="login" method="post" action="{% url 'signin' %}">

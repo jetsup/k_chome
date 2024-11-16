@@ -1,5 +1,7 @@
+.vscode/settings.json
 __pycache__
 node_modules
 credentials.py
 */migrations/[0-9]*_*.py
 test.*
+celerybeat-schedule

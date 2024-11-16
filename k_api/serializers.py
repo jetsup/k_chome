@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from k_auth.models import HomeUsers
-from thing.models import Thing
+from thing.models import Things, Boards
+
 
 class HomeUserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -11,19 +12,57 @@ class HomeUserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = HomeUsers.objects.create_user(**validated_data)
         return user
+    
 
-
-class ThingSerializer(serializers.ModelSerializer):
+class BoardsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Thing
-        fields = ["id", "name", "is_digital", "value", "is_writable", "permission_to", "description", "created_at", "updated_at"]
+        model = Boards
+        fields = [
+            "id",
+            "name",
+            "description",
+            "vid",
+            "pid",
+            "baudrate",
+            "data_format",
+            "data_headers",
+            "created_at",
+            "updated_at",
+        ]
         extra_kwargs = {
-            "is_writable": {"read_only": True},
-            "permission_to" : {"read_only": True},
             "created_at": {"read_only": True},
             "updated_at": {"read_only": True},
         }
 
     def create(self, validated_data):
-        thing = Thing.objects.create(**validated_data)
+        board = Boards.objects.create(**validated_data)
+        return board
+    
+    def get_all_boards(self):
+        return Boards.objects.all()
+
+
+class ThingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Things
+        fields = [
+            "id",
+            "name",
+            "is_digital",
+            "value",
+            "is_writable",
+            "permission_to",
+            "description",
+            "created_at",
+            "updated_at",
+        ]
+        extra_kwargs = {
+            "is_writable": {"read_only": True},
+            "permission_to": {"read_only": True},
+            "created_at": {"read_only": True},
+            "updated_at": {"read_only": True},
+        }
+
+    def create(self, validated_data):
+        thing = Things.objects.create(**validated_data)
         return thing

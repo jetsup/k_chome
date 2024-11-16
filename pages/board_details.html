@@ -1,0 +1,167 @@
+{% extends "./components/layout.html" %}
+
+{% load static %}
+
+{% load custom_tags %}
+
+{% block title %}Board Details{% endblock %}
+
+{% block navbar %} 
+    {% include "./components/navbar.html" %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mt-2">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <h3>{{ board.name }}</h3>
+                    <a
+                        href="{% url 'boards' %}"
+                        class="text-white text-decoration-none"
+                    >
+                        <button class="btn btn-secondary">
+                            <i class="fa fa-chevron-left"></i> Back to Boards
+                        </button>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <form
+                        method="POST"
+                        action="{% url 'board-update' board.id %}"
+                    >
+                        {% csrf_token %}
+                        <div class="d-flex justify-content-between mt-2">
+                            <div class="form-group mb-3 col-md-5">
+                                <label for="board-name">Board Name</label>
+                                <input
+                                    type="text"
+                                    name="board-name"
+                                    id="board-name"
+                                    class="form-control"
+                                    value="{{ board.name }}"
+                                    required
+                                />
+
+                                {% if messages %} {% for message in messages %}
+                                {% if "board name" in message|to_lowercase %}
+                                <div class="alert alert-danger mt-2">
+                                    {{ message }}
+                                </div>
+                                {% endif %} {% endfor %} {% endif %}
+                            </div>
+                            <div class="form-group mb-3 col-md-5">
+                                <label for="baudrate">Baudrate</label>
+                                <input
+                                    type="text"
+                                    name="baudrate"
+                                    id="baudrate"
+                                    class="form-control"
+                                    value="{{ board.baudrate }}"
+                                    required
+                                />
+
+                                {% if messages %} {% for message in messages %}
+                                {% if "baudrate" in message|to_lowercase %}
+                                <div class="alert alert-danger mt-2">
+                                    {{ message }}
+                                </div>
+                                {% endif %} {% endfor %} {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="description">Board Description</label>
+                            <textarea
+                                name="description"
+                                id="description"
+                                class="form-control"
+                                required
+                            >
+{{ board.description }}</textarea
+                            >
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="data-headers"
+                                >Data Headers
+                                <i class="text-muted"
+                                    >(comma separated)</i
+                                ></label
+                            >
+                            <a
+                                class="bg-blue"
+                                data-toggle="tooltip"
+                                title="Headers that will be displayed on the dashboard and guages."
+                            >
+                                <i class="fa fa-question-circle"></i>
+                            </a>
+                            <input
+                                type="text"
+                                name="data-headers"
+                                id="data-headers"
+                                class="form-control"
+                                required
+                                value="{{ board.data_headers }}"
+                            />
+                            <small class="text-muted"
+                                >Example: Kitchen Temp, Kitchen Humidity, Living
+                                Room Temp, Living Room Humidity</small
+                            >
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="data-format">Data Format</label>
+                            <a
+                                class="bg-blue"
+                                data-toggle="tooltip"
+                                title="If your data from the board has a specific format, you can specify it here."
+                            >
+                                <i class="fa fa-question-circle"></i>
+                            </a>
+                            <input
+                                type="text"
+                                name="data-format"
+                                id="data-format"
+                                class="form-control"
+                                required
+                                value="{{ board.data_format }}"
+                            />
+                            <small class="text-muted"
+                                >Example: ##d1,d2,d3,d4##</small
+                            >
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <button type="submit" class="btn btn-primary">
+                                Update Board
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3>IoT Things</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        {% for thing in board.things.all %}
+                        <li class="list-group list-group-item">
+                            <a
+                                href="{% url 'thing-details' thing.id %}"
+                                class="text-decoration-none"
+                            >
+                                {{ thing.name }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

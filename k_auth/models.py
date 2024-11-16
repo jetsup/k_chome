@@ -12,6 +12,7 @@ from django.contrib import messages
 OTP_TIMEOUT = 300  # 5 minutes
 TOKEN_EXPIRATION = 1800  # 30 minutes
 
+
 class UserManager(BaseUserManager):
     def create_user(
         self,
@@ -19,7 +20,7 @@ class UserManager(BaseUserManager):
         last_name: str,
         id_passport_number: str,
         phone: str,
-        email: str|None,
+        email: str | None,
         password=None,
     ):
         if not first_name:
@@ -67,7 +68,7 @@ class UserManager(BaseUserManager):
 
 
 class UserTypes(models.Model):
-    user_type = models.CharField(max_length=10) # customer, admin, staff
+    user_type = models.CharField(max_length=10)  # customer, admin, staff
 
     def __str__(self):
         return self.user_type
@@ -100,7 +101,9 @@ class HomeUsers(AbstractUser):
     is_verified = models.BooleanField(default=False)
     verified_at = models.DateTimeField(null=True, blank=True, default=None)
     # verification code will be nullified after verification or after 24 hours
-    verification_token = models.OneToOneField(VerificationTokens, on_delete=models.SET_NULL, null=True, default=None)
+    verification_token = models.OneToOneField(
+        VerificationTokens, on_delete=models.SET_NULL, null=True, default=None
+    )
     last_login = models.DateTimeField(null=True, blank=True, default=None)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -124,9 +127,11 @@ class HomeUsers(AbstractUser):
 
     def send_verification_email(self, request: HttpRequest):
         self.verification_token = VerificationTokens.objects.create()
-        
+
         site_url = get_site_url(request)
-        verification_link = f"{site_url}/auth/verify/{str(self.verification_token.token)}"
+        verification_link = (
+            f"{site_url}/auth/verify/{str(self.verification_token.token)}"
+        )
         email_subject = "Account Activation"
         email_message = f"""
         You have created an account on {settings.PROJECT_SITE_NAME}. Please verify your email by clicking the link below to complete your registration.
@@ -144,7 +149,10 @@ class HomeUsers(AbstractUser):
         if response_code == 200:
             self.save()
         else:
-            messages.error(request, f"Failed to send verification email to {self.email}. Error code: {response_code}")
+            messages.error(
+                request,
+                f"Failed to send verification email to {self.email}. Error code: {response_code}",
+            )
 
         return response_code
 
