@@ -7,5 +7,5 @@ urlpatterns = [
     path("online-boards", views.online_boards, name="boards-online"),
     path("boards/add", views.add_board, name="board-add"),
     path("boards-update/<int:pk>/", views.update_board, name="board-update"),
-    path("boards/delete/<int:pk>/", views.delete_board, name="board-delete"),
+    path("boards-delete/<int:pk>/", views.delete_board, name="board-delete"),
 ]

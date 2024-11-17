@@ -13,18 +13,28 @@
 {% block content %}
 <div class="container">
     <div class="row mt-2">
-        <div class="col-md-6">
+        <div class="col-md-5">
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
                     <h3>{{ board.name }}</h3>
-                    <a
-                        href="{% url 'boards' %}"
-                        class="text-white text-decoration-none"
-                    >
-                        <button class="btn btn-secondary">
-                            <i class="fa fa-chevron-left"></i> Back to Boards
-                        </button>
-                    </a>
+                    <div class="d-flex">                        
+                        <a
+                            href="{% url 'boards' %}"
+                            class="text-white text-decoration-none"
+                        >
+                            <button class="btn btn-secondary">
+                                <i class="fa fa-chevron-left"></i> Back to Boards
+                            </button>
+                        </a>
+                        <a
+                            href="{% url 'board-delete' board.id %}"
+                            class="text-white text-decoration-none ms-4"
+                        >
+                            <button class="btn btn-danger">
+                                <i class="fa fa-trash"></i> Delete Board
+                            </button>
+                        </a>
+                    </div>
                 </div>
                 <div class="card-body">
                     <form
@@ -78,8 +88,8 @@
                                 class="form-control"
                                 required
                             >
-{{ board.description }}</textarea
-                            >
+                                {{ board.description }}
+                            </textarea>
                         </div>
 
                         <div class="form-group mb-3">
@@ -106,7 +116,7 @@
                             />
                             <small class="text-muted"
                                 >Example: Kitchen Temp, Kitchen Humidity, Living
-                                Room Temp, Living Room Humidity</small
+                                Room Temp</small
                             >
                         </div>
                         <div class="form-group mb-3">
@@ -127,7 +137,7 @@
                                 value="{{ board.data_format }}"
                             />
                             <small class="text-muted"
-                                >Example: ##d1,d2,d3,d4##</small
+                                >Example: ##d1,d2,d3##</small
                             >
                         </div>
 
@@ -140,7 +150,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-7">
             <div class="card">
                 <div class="card-header">
                     <h3>IoT Things</h3>
